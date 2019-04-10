@@ -21,7 +21,7 @@ describe("<Controls />", () => {
 
       rendered = render(
         <Controls
-          lock={locked}
+          locked={locked}
           closed={closed}
           toggleClosed={toggleClosed}
           toggleLocked={toggleLocked}
@@ -58,7 +58,7 @@ describe("<Controls />", () => {
 
       const { getByText } = render(
         <Controls
-          lock={locked}
+          locked={locked}
           closed={closed}
           toggleClosed={toggleClosed}
           toggleLocked={toggleLocked}
@@ -68,6 +68,26 @@ describe("<Controls />", () => {
 
       fireEvent.click(lockButton);
       expect(locked).toEqual(false);
+    });
+
+    it("should not open the gate when locked", () => {
+      let closed = true;
+      let locked = true;
+      let toggleLocked = jest.fn(() => (locked = !locked));
+      let toggleClosed = jest.fn(() => (closed = !closed));
+
+      const { getByText } = render(
+        <Controls
+          locked={locked}
+          closed={closed}
+          toggleClosed={toggleClosed}
+          toggleLocked={toggleLocked}
+        />
+      );
+      const closeButton = getByText(/Open Gate/i);
+
+      fireEvent.click(closeButton);
+      expect(closed).toEqual(true);
     });
   });
 });
