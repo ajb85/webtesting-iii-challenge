@@ -1,5 +1,4 @@
 // Test away!
-// Test away
 import React from "react";
 import ReactDOM from "react-dom";
 import { render, fireEvent, cleanup } from "react-testing-library";
@@ -11,10 +10,17 @@ import Controls from "./Controls.js";
 afterEach(cleanup);
 
 describe("<Controls />", () => {
+  it("renders without crashing", () => {
+    const div = document.createElement("div");
+    ReactDOM.render(<Controls />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+
   it("matches snapshot", () => {
     const tree = renderer.create(<Controls />).toJSON();
     expect(tree).toMatchSnapshot();
   });
+
   describe("Basic Functions", () => {
     let closed, locked, toggleLocked, toggleClosed, rendered;
     beforeEach(() => {
@@ -31,12 +37,6 @@ describe("<Controls />", () => {
           toggleLocked={toggleLocked}
         />
       );
-    });
-
-    it("renders without crashing", () => {
-      const div = document.createElement("div");
-      ReactDOM.render(<Controls />, div);
-      ReactDOM.unmountComponentAtNode(div);
     });
 
     it("should toggle 'locked' state", () => {
