@@ -11,6 +11,10 @@ import Controls from "./Controls.js";
 afterEach(cleanup);
 
 describe("<Controls />", () => {
+  it("matches snapshot", () => {
+    const tree = renderer.create(<Controls />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
   describe("Basic Functions", () => {
     let closed, locked, toggleLocked, toggleClosed, rendered;
     beforeEach(() => {
